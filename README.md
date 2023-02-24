@@ -6,6 +6,11 @@ Smart Factory와 같은 경우에 지연시간이 매우 중요해서 주로 on 
 
 Cloud 시스템에서 Latency를 줄이는 방법에 CloudFront에 Edge Lambda를 통해 어느정도 개선을 할 수 있습니다. 여기서는 Edge Lambda에 Image Classification을 수행하는 머신 러닝 API를 구현하고자 합니다. 
 
+S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니다.
+
+![image](https://user-images.githubusercontent.com/52392004/221320135-62863c02-11f8-47cf-b468-906281ecca6a.png)
+
+
 ## ResNet-50 추론
 
 ResNet-50을 이용하여 이미지 분류(Image Classification)에 대한 추론을 구현합니다. 
@@ -20,3 +25,5 @@ Edge Lambda로 구현을 하면 Global 서비스라면 어디든지 Low Latency�
 ## Reference
 
 [머신러닝(ML) 기반의 이미지 분류를 위한 API 서버 만들기](https://github.com/kyopark2014/image-classification-api-server)
+
+[Adding HTTP Security Headers Using Lambda@Edge and Amazon CloudFront](https://aws.amazon.com/ko/blogs/networking-and-content-delivery/adding-http-security-headers-using-lambdaedge-and-amazon-cloudfront/)
