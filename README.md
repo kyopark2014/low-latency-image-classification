@@ -11,6 +11,7 @@ S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니�
 ![image](https://user-images.githubusercontent.com/52392004/221320135-62863c02-11f8-47cf-b468-906281ecca6a.png)
 
 
+
 ## ResNet-50 추론
 
 ResNet-50을 이용하여 이미지 분류(Image Classification)에 대한 추론을 구현합니다. 
@@ -27,3 +28,5 @@ Edge Lambda로 구현을 하면 Global 서비스라면 어디든지 Low Latency�
 [머신러닝(ML) 기반의 이미지 분류를 위한 API 서버 만들기](https://github.com/kyopark2014/image-classification-api-server)
 
 [Adding HTTP Security Headers Using Lambda@Edge and Amazon CloudFront](https://aws.amazon.com/ko/blogs/networking-and-content-delivery/adding-http-security-headers-using-lambdaedge-and-amazon-cloudfront/)
+
+[@aws-cdk/aws-cloudfront](https://www.npmjs.com/package/@aws-cdk/aws-cloudfront?activeTab=readme)
