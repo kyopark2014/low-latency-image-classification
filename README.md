@@ -28,3 +28,5 @@ Edge Lambda로 구현을 하면 Global 서비스라면 어디든지 Low Latency�
 [Adding HTTP Security Headers Using Lambda@Edge and Amazon CloudFront](https://aws.amazon.com/ko/blogs/networking-and-content-delivery/adding-http-security-headers-using-lambdaedge-and-amazon-cloudfront/)
 
 [@aws-cdk/aws-cloudfront](https://www.npmjs.com/package/@aws-cdk/aws-cloudfront?activeTab=readme)
+
+[Lambda@Edge – Intelligent Processing of HTTP Requests at the Edge](https://aws.amazon.com/ko/blogs/aws/lambdaedge-intelligent-processing-of-http-requests-at-the-edge/)
