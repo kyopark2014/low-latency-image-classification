@@ -1,6 +1,6 @@
 # Low Latency Image Classification
 
-Smart Factory와 같은 경우에 지연시간이 매우 중요해서 주로 온프레미스(on-premise)을 많이 이용하고 있습니다. 이를 위해선 Factory가 있는 장소에 장비와 인력을 상주시켜야 하는 어려움이 있고, Cloud 특유의 비용 효율성 및 안정적인 시스템을 구축의 장점을 활용할 수 없습니다. 또한, Cloud에 시스템을 구축했더라도, 특정 리전에 시스템을 구축하였다면, Global 서비스의 경우에 다른 먼지역에서 들어오는 요청시 네트워크 지연의 문제점을 피할 수 없습니다. Amazon CloudFront는 WEB 컨텐츠인 html, css, js, image 파일등을 Edge에 두어서, 사용자의 요청이 있을때에 가장 가까운 edge location으로 라우팅함으로 웹서비스의 속도를 향상시킵니다. 여기에서는 CloudFront에 Edge Lambda를 이용하여 이미지 분류에 대한 Latency를 줄이는 방법을 설명합니다. 
+Smart Factory와 같은 경우에 지연시간이 매우 중요해서 주로 온프레미스(on-premise)을 많이 이용하고 있습니다. 이를 위해선 Factory가 있는 장소에 장비와 인력을 상주시켜야 하는 어려움이 있고, Cloud 특유의 비용 효율성 및 안정적인 시스템을 구축의 장점을 활용할 수 없습니다. 또한, Cloud에 시스템을 구축했더라도, 특정 리전에 시스템을 구축하였다면, Global 서비스의 경우에 다른 먼지역에서 들어오는 요청시 네트워크 지연의 문제점을 피할 수 없습니다. Amazon CloudFront는 WEB 컨텐츠인 html, css, js, image 파일등을 edge에 두어서, 사용자의 요청이 있을때에 가장 가까운 edge location으로 라우팅함으로 웹서비스의 속도를 향상시킵니다. 여기에서는 CloudFront에 Edge Lambda를 이용하여 이미지 분류에 대한 Latency를 줄이는 방법을 설명합니다. 
 
 S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니다.
 
