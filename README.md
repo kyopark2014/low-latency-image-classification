@@ -21,11 +21,7 @@ S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니�
 - eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST
 - eventType: cloudfront.LambdaEdgeEventType.VIEWER_RESPONSE
 
-```java
-6:20:46 AM | CREATE_FAILED        | AWS::CloudFront::Distribution                   | cloudfrontB139FFFD
-Resource handler returned message: "Invalid request provided: AWS::CloudFront::Distribution: Lambda@Edge does not support functions with a repository type of ECR (Service: CloudFront, Status Code: 400, Request ID: 9d37f5f8-
-b8da-4e5a-b577-46cb505f046a)" (RequestToken: cc4268d3-5af6-af9c-e465-076a0be8229e, HandlerErrorCode: InvalidRequest)
-```
+
 
 - Example
 
@@ -95,6 +91,31 @@ ResNet-50을 이용하여 이미지 분류(Image Classification)에 대한 추�
 Edge에 있는 CloudFront에서 Lambda를 통해 네트워크에 대한 지연시간을 줄입니다.
 
 Edge Lambda로 구현을 하면 Global 서비스라면 어디든지 Low Latency를 구현할 수 있습니다.
+
+
+## ECR 사용 불가
+
+아래와 같이 ECR을 이용해 Docker Container Image 배포를 시도하면 아래와 같은 에러를 발생합니다. 
+
+```java
+6:20:46 AM | CREATE_FAILED        | AWS::CloudFront::Distribution                   | cloudfrontB139FFFD
+Resource handler returned message: "Invalid request provided: AWS::CloudFront::Distribution: Lambda@Edge does not support functions with a repository type of ECR (Service: CloudFront, Status Code: 400, Request ID: 9d37f5f8-
+b8da-4e5a-b577-46cb505f046a)" (RequestToken: cc4268d3-5af6-af9c-e465-076a0be8229e, HandlerErrorCode: InvalidRequest)
+```
+
+사용된 코드는 아래와 같습니다. 
+
+```java
+// Create Edge Lambda for image classification
+    const lambdaClassifier = new cloudFront.experimental.EdgeFunction(this, "edge-lambda-api", {
+      functionName: 'edge-lambda-classification',
+      memorySize: 512,
+      runtime: lambda.Runtime.FROM_IMAGE,
+      handler: lambda.Handler.FROM_IMAGE,
+      code: lambda.Code.fromAssetImage(path.join(__dirname, "../../lambda-classification")),
+      timeout: cdk.Duration.seconds(30),
+    }); 
+```
 
 ## Reference
 
