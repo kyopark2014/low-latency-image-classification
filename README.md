@@ -8,6 +8,10 @@ S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니�
 
 ![image](https://user-images.githubusercontent.com/52392004/221320135-62863c02-11f8-47cf-b468-906281ecca6a.png)
 
+그런데, CDK에서 빌드시 에러 발생하고 있어서 아래 링크로 추가 확인 진행 예정
+
+[이미지 리사이즈 CloudFront + Lambda@Edge](https://v3.leedo.me/image-resize-by-cloudfront-lambda-edge)
+
 
 ## 구현사항
 
