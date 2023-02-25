@@ -8,6 +8,11 @@ S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니�
 
 ![image](https://user-images.githubusercontent.com/52392004/221320135-62863c02-11f8-47cf-b468-906281ecca6a.png)
 
+#### Edge Lambda를 이용한 Low Latency 구현
+
+Edge에 있는 CloudFront에서 Lambda를 통해 네트워크에 대한 지연시간을 줄입니다.
+
+Edge Lambda로 구현을 하면 Global 서비스라면 어디든지 Low Latency를 구현할 수 있습니다.
 
 
 
@@ -139,11 +144,6 @@ new CdkEdgeClassificationStack(app, 'CdkEdgeClassificationStack', {
 ResNet-50을 이용하여 이미지 분류(Image Classification)에 대한 추론을 구현합니다. 
 
 
-## Edge Lambda를 이용한 Low Latency 구현
-
-Edge에 있는 CloudFront에서 Lambda를 통해 네트워크에 대한 지연시간을 줄입니다.
-
-Edge Lambda로 구현을 하면 Global 서비스라면 어디든지 Low Latency를 구현할 수 있습니다.
 
 
 ## Reference
