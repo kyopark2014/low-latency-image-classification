@@ -17,18 +17,13 @@ S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니�
 - eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST
 - eventType: cloudfront.LambdaEdgeEventType.VIEWER_RESPONSE
 
+```java
+6:20:46 AM | CREATE_FAILED        | AWS::CloudFront::Distribution                   | cloudfrontB139FFFD
+Resource handler returned message: "Invalid request provided: AWS::CloudFront::Distribution: Lambda@Edge does not support functions with a repository type of ECR (Service: CloudFront, Status Code: 400, Request ID: 9d37f5f8-
+b8da-4e5a-b577-46cb505f046a)" (RequestToken: cc4268d3-5af6-af9c-e465-076a0be8229e, HandlerErrorCode: InvalidRequest)
+```
 
-- Docker container를 Edge Lambda에서 지원하는지? Node.js 또는 Python 함수를 작성
-
-[Lambda@Edge를 사용하여 엣지에서 사용자 지정](https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/lambda-at-the-edge.html)
-
-[자습서: 간단한 Lambda@Edge 함수 생성](https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/lambda-edge-how-it-works-tutorial.html)
-
-- 특정리전에 넣어야 하는지? US-East-1
-
- You can author Node.js or Python functions in the US East (N. Virginia) region, and then execute them in AWS locations globally that are closer to the viewer, without provisioning or managing servers. Lambda@Edge functions are associated with a specific behavior and event type. Lambda@Edge can be used to rewrite URLs, alter responses based on headers or cookies, or authorize requests based on headers or authorization tokens.
-
-[@aws-cdk/aws-cloudfront](https://www.npmjs.com/package/@aws-cdk/aws-cloudfront?activeTab=readme)
+- Example
 
 ```java
 const myFunc1 = new cloudfront.experimental.EdgeFunction(this, 'MyFunction1', {
@@ -71,29 +66,6 @@ myDistribution.addBehavior('images/*', myOrigin, {
 
 [class EdgeFunction (construct)](https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-cloudfront.experimental.EdgeFunction.html)
 
-```java
-// and triggered on every request
-const myFunc = new cloudfront.experimental.EdgeFunction(this, 'MyFunction', {
-  runtime: lambda.Runtime.NODEJS_14_X,
-  handler: 'index.handler',
-  code: lambda.Code.fromAsset(path.join(__dirname, 'lambda-handler')),
-});
-
-declare const myBucket: s3.Bucket;
-new cloudfront.Distribution(this, 'myDist', {
-  defaultBehavior: {
-    origin: new origins.S3Origin(myBucket),
-    edgeLambdas: [
-      {
-        functionVersion: myFunc.currentVersion,
-        eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
-      }
-    ],
-  },
-});
-```
-
-
 
 #### Region 설정
 
@@ -132,3 +104,9 @@ Edge Lambda로 구현을 하면 Global 서비스라면 어디든지 Low Latency�
 [이미지 리사이즈 CloudFront + Lambda@Edge](https://v3.leedo.me/image-resize-by-cloudfront-lambda-edge)
 
 [How to get and set Account ID and Region in AWS CDK](https://bobbyhadz.com/blog/cdk-get-region-accountid)
+
+[@aws-cdk/aws-cloudfront](https://www.npmjs.com/package/@aws-cdk/aws-cloudfront?activeTab=readme)
+
+[Lambda@Edge를 사용하여 엣지에서 사용자 지정](https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/lambda-at-the-edge.html)
+
+[자습서: 간단한 Lambda@Edge 함수 생성](https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/lambda-edge-how-it-works-tutorial.html)
