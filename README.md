@@ -12,6 +12,13 @@ S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니�
 
 [이미지 리사이즈 CloudFront + Lambda@Edge](https://v3.leedo.me/image-resize-by-cloudfront-lambda-edge)
 
+## 상세 동작
+
+[Using AWS Lambda with CloudFront Lambda@Edge](https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html)와 같이 Lambda@Edge는 별도의 Provisioning이나 서버를 관리할 필요없이 CloudFront event에 대한 request나 response에 변경할 수 있습니다. 여기서는 Viewer Request 단계에서 Lambda@Edge를 이용하고자 합니다. 
+
+![image](https://user-images.githubusercontent.com/52392004/221347696-8c240017-7de3-4f5d-abf1-dc07af8af6b0.png)
+
+
 
 ## 구현사항
 
