@@ -93,7 +93,7 @@ Edge에 있는 CloudFront에서 Lambda를 통해 네트워크에 대한 지연�
 Edge Lambda로 구현을 하면 Global 서비스라면 어디든지 Low Latency를 구현할 수 있습니다.
 
 
-## ECR 사용 불가
+## Edge Lambda의 ECR 미지원 
 
 아래와 같이 ECR을 이용해 Docker Container Image 배포를 시도하면 아래와 같은 에러를 발생합니다. 
 
