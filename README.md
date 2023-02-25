@@ -64,6 +64,29 @@ myDistribution.addBehavior('images/*', myOrigin, {
 });
 ```
 
+[class EdgeFunction (construct)](https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-cloudfront.experimental.EdgeFunction.html)
+
+```java
+// and triggered on every request
+const myFunc = new cloudfront.experimental.EdgeFunction(this, 'MyFunction', {
+  runtime: lambda.Runtime.NODEJS_14_X,
+  handler: 'index.handler',
+  code: lambda.Code.fromAsset(path.join(__dirname, 'lambda-handler')),
+});
+
+declare const myBucket: s3.Bucket;
+new cloudfront.Distribution(this, 'myDist', {
+  defaultBehavior: {
+    origin: new origins.S3Origin(myBucket),
+    edgeLambdas: [
+      {
+        functionVersion: myFunc.currentVersion,
+        eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
+      }
+    ],
+  },
+});
+```
 
 
 
