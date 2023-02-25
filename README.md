@@ -37,12 +37,12 @@ b8da-4e5a-b577-46cb505f046a)" (RequestToken: cc4268d3-5af6-af9c-e465-076a0be8229
     }); 
 ```
 
-그런데, CDK에서 빌드시에 ECR 미지원에 대해서는 추가 검토할 계획입니다.
+이와 같이 Edge Lambda에서 ECR 미지원하므로 아래 케이스를 추가 확인할 계획입니다. 
 
 [이미지 리사이즈 CloudFront + Lambda@Edge](https://v3.leedo.me/image-resize-by-cloudfront-lambda-edge)
 
 
-방안중에 하나는 로컬 Docker 이미지로 Lambda 구성하는것입니다. 
+또 다른 방안중에 하나로 로컬 Docker 이미지로 Lambda 구성하는것입니다. 
 
 [[Docker] 로컬 Docker 이미지 파일 저장 후 원격 서버에 배포하기](https://hwanlee.tistory.com/18)와 같이 아래처럼 docker image를 tar로 저장할 수 있습니다. 
 
