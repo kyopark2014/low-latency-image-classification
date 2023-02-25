@@ -95,7 +95,7 @@ new cloudfront.Distribution(this, 'myDist', {
 
 
 
-#### Resion 설정
+#### Region 설정
 
 'bin/cdk-edge-classification.ts"에서 아래와 같이 region을 'us-east-1'으로 고정합니다.
 
