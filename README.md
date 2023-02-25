@@ -117,3 +117,5 @@ Edge Lambda로 구현을 하면 Global 서비스라면 어디든지 Low Latency�
 [Lambda@Edge – Intelligent Processing of HTTP Requests at the Edge](https://aws.amazon.com/ko/blogs/aws/lambdaedge-intelligent-processing-of-http-requests-at-the-edge/)
 
 [이미지 리사이즈 CloudFront + Lambda@Edge](https://v3.leedo.me/image-resize-by-cloudfront-lambda-edge)
+
+[How to get and set Account ID and Region in AWS CDK](https://bobbyhadz.com/blog/cdk-get-region-accountid)
