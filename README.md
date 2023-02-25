@@ -12,18 +12,11 @@ S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니�
 
 [이미지 리사이즈 CloudFront + Lambda@Edge](https://v3.leedo.me/image-resize-by-cloudfront-lambda-edge)
 
-## 상세 동작
 
-[Using AWS Lambda with CloudFront Lambda@Edge](https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html)와 같이 Lambda@Edge는 별도의 Provisioning이나 서버를 관리할 필요없이 CloudFront event에 대한 request나 response에 변경할 수 있습니다. 여기서는 Viewer Request 단계에서 Lambda@Edge를 이용하고자 합니다. 
-
-![image](https://user-images.githubusercontent.com/52392004/221347696-8c240017-7de3-4f5d-abf1-dc07af8af6b0.png)
+## 구현 및 실패
 
 
-
-## 구현사항
-
-
-### 로컬 Docker 이미지 활용 
+### 로컬 Docker 이미지로 Lambda 구성  
 
 [[Docker] 로컬 Docker 이미지 파일 저장 후 원격 서버에 배포하기](https://hwanlee.tistory.com/18)
 
@@ -38,14 +31,26 @@ const entry = '/path/to/function';
 const image = DockerImage.fromBuild(entry);
 ```
 
-#### Reguqst type
+### CloudFront 연동
+
+Edge Lambda를 console에서 생성하고 CloudFront와 연동시 에러가 발생합니다. 아래와 같이 runtime으로 IMAGE를 미지원하면 ML Docker Container를 Edge Lambda에서 미지원으로 보아야 할것으로 보여집니다. 
+
+<img width="882" alt="image" src="https://user-images.githubusercontent.com/52392004/221349568-8484c0f7-53cc-4770-9ef0-b4fc14aae47a.png">
+
+
+
+### Reguest Type
+
+[Using AWS Lambda with CloudFront Lambda@Edge](https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html)와 같이 Lambda@Edge는 별도의 Provisioning이나 서버를 관리할 필요없이 CloudFront event에 대한 request나 response에 변경할 수 있습니다. 여기서는 Viewer Request 단계에서 Lambda@Edge를 이용하고자 합니다. 
+
+![image](https://user-images.githubusercontent.com/52392004/221347696-8c240017-7de3-4f5d-abf1-dc07af8af6b0.png)
+
+eventType은 아래처럼 사용합니다.
 
 - eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST
 - eventType: cloudfront.LambdaEdgeEventType.VIEWER_RESPONSE
 
-
-
-- Example
+실제 사용하는 예제는 아래와 같습니다. 
 
 ```java
 const myFunc1 = new cloudfront.experimental.EdgeFunction(this, 'MyFunction1', {
@@ -91,7 +96,7 @@ myDistribution.addBehavior('images/*', myOrigin, {
 
 #### Region 설정
 
-'bin/cdk-edge-classification.ts"에서 아래와 같이 region을 'us-east-1'으로 고정합니다.
+Edge Lambda는 'us-east-1'에서만 설정할 수 있습니다. 'bin/cdk-edge-classification.ts"에서 아래와 같이 region을 'us-east-1'으로 고정합니다.
 
 ```java
 const app = new cdk.App();
