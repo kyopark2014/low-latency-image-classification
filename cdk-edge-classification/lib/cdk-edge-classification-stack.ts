@@ -15,7 +15,7 @@ export class CdkEdgeClassificationStack extends cdk.Stack {
     const stage = "dev"; 
 
     // s3 
-    /* const s3Bucket = new s3.Bucket(this, "gg-depolyment-storage",{
+    const s3Bucket = new s3.Bucket(this, "gg-depolyment-storage",{
       // bucketName: bucketName,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
@@ -49,41 +49,37 @@ export class CdkEdgeClassificationStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'distributionDomainName', {
       value: distribution.domainName,
       description: 'The domain name of the Distribution',
-    }); */
+    }); 
 
     // Create Edge Lambda for image classification
-    const mlLambda = new cloudFront.experimental.EdgeFunction(this, "edge-lambda-api", {
-      /*runtime: lambda.Runtime.NODEJS_16_X,
-      handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../lambda-classification')),
-      stackId: 'edge-lambda-stack-id-1',
-      description: 'lambda function for image classification',*/
-      
+    const lambdaClassifier = new cloudFront.experimental.EdgeFunction(this, "edge-lambda-api", {
       functionName: 'edge-lambda-classification',
       memorySize: 512,
       runtime: lambda.Runtime.FROM_IMAGE,
       handler: lambda.Handler.FROM_IMAGE,
       code: lambda.Code.fromAssetImage(path.join(__dirname, "../../lambda-classification")),
-      //code: lambda.Code.fromDockerBuild(path.join(__dirname, '../../lambda-classification')),
-      //code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../../lambda-classification')),
-      //code: lambda.Code.fromAssetImage(path.join(__dirname, '../../lambda-classification')),
-      //code: lambda.Code.fromAsset(path.join(__dirname, 'lambda-handler1')),
-      //code=_lambda.DockerImageCode.from_image_asset(
-      //code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../../lambda-classification')),
-      // code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../../lambda-classification')),
-      //code: lambda.Code.fromDockerBuild(path.join(__dirname, '../../lambda-classification'), {
-      //  file: 'viewer-request.Dockerfile',
-      //}),
-
-      //code: lambda.Code.fromAsset(path.join(__dirname, 'lambda-handler1')),
       timeout: cdk.Duration.seconds(30),
     }); 
 
     // version
-    const version = mlLambda.currentVersion;
+    const version = lambdaClassifier.currentVersion;
     const alias = new lambda.Alias(this, 'LambdaAlias', {
       aliasName: stage,
       version,
     });
+
+    // cloudfront setting for api gateway of emotion
+    distribution.addBehavior("/classify", new origins.S3Origin(s3Bucket), {
+      cachePolicy: cloudFront.CachePolicy.CACHING_DISABLED,
+      allowedMethods: cloudFront.AllowedMethods.ALLOW_ALL,  
+      viewerProtocolPolicy: cloudFront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+
+      edgeLambdas: [
+        {
+          functionVersion: lambdaClassifier.currentVersion,
+          eventType: cloudFront.LambdaEdgeEventType.VIEWER_REQUEST,
+        },
+      ],
+    });    
   }
 }
