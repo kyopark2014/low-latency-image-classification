@@ -9,6 +9,64 @@ S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니�
 ![image](https://user-images.githubusercontent.com/52392004/221320135-62863c02-11f8-47cf-b468-906281ecca6a.png)
 
 
+## 구현사항
+
+
+
+- Docker container를 Edge Lambda에서 지원하는지? Node.js 또는 Python 함수를 작성
+
+[Lambda@Edge를 사용하여 엣지에서 사용자 지정](https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/lambda-at-the-edge.html)
+
+[자습서: 간단한 Lambda@Edge 함수 생성](https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/lambda-edge-how-it-works-tutorial.html)
+
+- 특정리전에 넣어야 하는지? US-East-1
+
+ You can author Node.js or Python functions in the US East (N. Virginia) region, and then execute them in AWS locations globally that are closer to the viewer, without provisioning or managing servers. Lambda@Edge functions are associated with a specific behavior and event type. Lambda@Edge can be used to rewrite URLs, alter responses based on headers or cookies, or authorize requests based on headers or authorization tokens.
+
+[@aws-cdk/aws-cloudfront](https://www.npmjs.com/package/@aws-cdk/aws-cloudfront?activeTab=readme)
+
+```java
+const myFunc1 = new cloudfront.experimental.EdgeFunction(this, 'MyFunction1', {
+  runtime: lambda.Runtime.NODEJS_14_X,
+  handler: 'index.handler',
+  code: lambda.Code.fromAsset(path.join(__dirname, 'lambda-handler1')),
+  stackId: 'edge-lambda-stack-id-1',
+});
+
+declare const myFunc: cloudfront.experimental.EdgeFunction;
+// assigning at Distribution creation
+declare const myBucket: s3.Bucket;
+const myOrigin = new origins.S3Origin(myBucket);
+const myDistribution = new cloudfront.Distribution(this, 'myDist', {
+  defaultBehavior: { origin: myOrigin },
+  additionalBehaviors: {
+    'images/*': {
+      origin: myOrigin,
+      edgeLambdas: [
+        {
+          functionVersion: myFunc.currentVersion,
+          eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+          includeBody: true, // Optional - defaults to false
+        },
+      ],
+    },
+  },
+});
+
+// assigning after creation
+myDistribution.addBehavior('images/*', myOrigin, {
+  edgeLambdas: [
+    {
+      functionVersion: myFunc.currentVersion,
+      eventType: cloudfront.LambdaEdgeEventType.VIEWER_RESPONSE,
+    },
+  ],
+});
+```
+
+
+
+
 
 ## ResNet-50 추론
 
@@ -27,6 +85,5 @@ Edge Lambda로 구현을 하면 Global 서비스라면 어디든지 Low Latency�
 
 [Adding HTTP Security Headers Using Lambda@Edge and Amazon CloudFront](https://aws.amazon.com/ko/blogs/networking-and-content-delivery/adding-http-security-headers-using-lambdaedge-and-amazon-cloudfront/)
 
-[@aws-cdk/aws-cloudfront](https://www.npmjs.com/package/@aws-cdk/aws-cloudfront?activeTab=readme)
 
 [Lambda@Edge – Intelligent Processing of HTTP Requests at the Edge](https://aws.amazon.com/ko/blogs/aws/lambdaedge-intelligent-processing-of-http-requests-at-the-edge/)
