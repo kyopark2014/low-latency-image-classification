@@ -23,6 +23,21 @@ S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니�
 ## 구현사항
 
 
+### 로컬 Docker 이미지 활용 
+
+[[Docker] 로컬 Docker 이미지 파일 저장 후 원격 서버에 배포하기](https://hwanlee.tistory.com/18)
+
+```java
+docker save 이미지명 > 파일명.tar
+```
+
+[class DockerImage](https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_core.DockerImage.html)을 이용해 Docker container image를 파일로 저장후 로드해서 쓸수 있다면 Edge에서 동작 가능할것으로 기대합니다. (제발!)
+
+```java
+const entry = '/path/to/function';
+const image = DockerImage.fromBuild(entry);
+```
+
 #### Reguqst type
 
 - eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST
