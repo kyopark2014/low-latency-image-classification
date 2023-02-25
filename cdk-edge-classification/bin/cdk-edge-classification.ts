@@ -5,6 +5,10 @@ import { CdkEdgeClassificationStack } from '../lib/cdk-edge-classification-stack
 
 const app = new cdk.App();
 new CdkEdgeClassificationStack(app, 'CdkEdgeClassificationStack', {
+  env: {
+    region: 'us-east-1',
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+  },
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */
