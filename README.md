@@ -12,6 +12,11 @@ S3는 Web hosting을 위한 html, image, css의 storage 역할을 수행합니�
 ## 구현사항
 
 
+#### Reguqst type
+
+- eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST
+- eventType: cloudfront.LambdaEdgeEventType.VIEWER_RESPONSE
+
 
 - Docker container를 Edge Lambda에서 지원하는지? Node.js 또는 Python 함수를 작성
 
