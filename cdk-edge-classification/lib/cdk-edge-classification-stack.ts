@@ -5,8 +5,6 @@ import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudFront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
-import * as iam from 'aws-cdk-lib/aws-iam';
-import * as apiGateway from 'aws-cdk-lib/aws-apigateway';
 
 export class CdkEdgeClassificationStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -68,7 +66,7 @@ export class CdkEdgeClassificationStack extends cdk.Stack {
       version,
     });
 
-    // cloudfront setting for api gateway of emotion
+    // cloudfront setting for edge lambda classification
     distribution.addBehavior("/classify", new origins.S3Origin(s3Bucket), {
       cachePolicy: cloudFront.CachePolicy.CACHING_DISABLED,
       allowedMethods: cloudFront.AllowedMethods.ALLOW_ALL,  
