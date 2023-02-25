@@ -95,6 +95,19 @@ new cloudfront.Distribution(this, 'myDist', {
 
 
 
+#### Resion 설정
+
+'bin/cdk-edge-classification.ts"에서 아래와 같이 region을 'us-east-1'으로 고정합니다.
+
+```java
+const app = new cdk.App();
+new CdkEdgeClassificationStack(app, 'CdkEdgeClassificationStack', {
+  env: {
+    region: 'us-east-1',
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+  },
+```
+
 
 ## ResNet-50 추론
 
